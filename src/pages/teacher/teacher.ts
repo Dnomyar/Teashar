@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform, LoadingController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 //import { File, Entry } from '@ionic-native/file';
 import { File as IonicNativeFile } from '@ionic-native/file';
@@ -7,6 +7,7 @@ import { File as IonicNativeFile } from '@ionic-native/file';
 
 import firebase from 'firebase';
 import { Gallery } from "../../media/filesystem/gallery/gallery.impl";
+import { Upload } from "../../media/upload/upload.impl";
 
 declare var cordova: any;
 
@@ -37,6 +38,8 @@ export class Teacher {
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
     @Inject(Gallery) public gallery,
+    @Inject(Upload) public upload,
+    public loadingCtrl: LoadingController,
     private file: IonicNativeFile) {
 
     this.songs = af.database.list('/songs');
@@ -86,7 +89,6 @@ export class Teacher {
         {
           text: 'Save',
           handler: data => {
-
             //this.uploadimage()
 
             this.songs.push({
@@ -102,141 +104,39 @@ export class Teacher {
 
   uploadimage(filePath: string) {
 
+    const getLoadMessage: (number) => string = (progress) => {
+      return `Please wait... (${progress} %)`
+    }
 
+    let loader = this.loadingCtrl.create({
+      content: getLoadMessage(0)
+    });
+    loader.present();
 
-    // const file = new File("/path/to/file");
-    // var reader = new FileReader();
-    // reader.readAsArrayBuffer()
-    // var blob = new Blob([buffer])
-    // reader.readAsArrayBuffer(blob);
-    // reader.onloadend = (evt: any) => {
-    //   var imgBlob = new Blob([evt.target.result], { type: 'image/png' });
-    //   var imageStore = this.firestore.ref().child('image');
-    //   imageStore.put(imgBlob).then((res) => {
-    //     alert('Upload Success');
-    //   }).catch((err) => {
-    //     alert('Upload Failed' + err);
-    //   })
-    // }
+    const progress = (progress: number) => {
+      loader.setContent(getLoadMessage(progress))
+    }
 
+    this.upload.upload(filePath, progress)
+      .then((res) => {
+        loader.dismiss()
+        let alert = this.alertCtrl.create({
+          title: 'Ok',
+          buttons: ['OK']
+        });
+        alert.present();
 
-    this.file.resolveLocalFilesystemUrl(filePath).then((res: any) => {
-
-
-      res.file((resFile) => {
-        var reader = new FileReader();
-        reader.readAsArrayBuffer(resFile);
-        reader.onloadend = (evt: any) => {
-          alert("onloadend")
-          var imgBlob = new Blob([evt.target.result], { type: 'image/png' });
-          var imageStore = this.firestore.ref().child('image');
-          imageStore.put(imgBlob).then((res) => {
-            alert('Upload Success');
-          }, (err) => {
-            alert('Upload Failed' + err);
-          })
-        }
+      })
+      .catch((err) => {
+        loader.dismiss()
+        let alert = this.alertCtrl.create({
+          title: 'KO',
+          subTitle: JSON.stringify(err),
+          buttons: ['OK']
+        });
+        alert.present();
       })
 
-    }, (err: Error) => {
-      alert('err resolveLocalFilesystemUrl');
-      alert(JSON.stringify(err))
-    })
-
-    // this.file.listDir(this.storageDirectory, "").then((res: Entry[]) => {
-    //   alert('success listDir');
-    //   res.forEach(e => JSON.stringify(e))
-    // }, (err: Error) => {
-    //   alert('err listDir');
-    //   alert(JSON.stringify(err))
-    // })
-
-
-    // this.file.readAsArrayBuffer(this.storageDirectory, 'assets/images/ionic2-logo.png')
-    //   .then((buffer: ArrayBuffer) => {
-
-    //     var reader = new FileReader();
-    //     var blob = new Blob([buffer])
-    //     reader.readAsArrayBuffer(blob);
-    //     reader.onloadend = (evt: any) => {
-    //       var imgBlob = new Blob([evt.target.result], { type: 'image/png' });
-    //       var imageStore = this.firestore.ref().child('image');
-    //       imageStore.put(imgBlob).then((res) => {
-    //         alert('Upload Success');
-    //       }).catch((err) => {
-    //         alert('Upload Failed' + err);
-    //       })
-    //     }
-    //   }, (err) => {
-    //     alert('err readAsArrayBuffer');
-    //     alert(JSON.stringify(err))
-    //   })
-
-
-
-
-
-    // this.file.resolveLocalFilesystemUrl(`${this.storageDirectory}assets/images/ionic2-logo.png`)
-    //   .then((resFile: Entry) => {
-
-    //     this.file.readAsArrayBuffer(resFile.nativeURL, 'assets/images/ionic2-logo.png')
-    //       .then((buffer: ArrayBuffer) => {
-
-    //         var reader = new FileReader();
-    //         var blob = new Blob([buffer])
-    //         reader.readAsArrayBuffer(blob);
-    //         reader.onloadend = (evt: any) => {
-    //           var imgBlob = new Blob([evt.target.result], { type: 'image/png' });
-    //           var imageStore = this.firestore.ref().child('image');
-    //           imageStore.put(imgBlob).then((res) => {
-    //             alert('Upload Success');
-    //           }).catch((err) => {
-    //             alert('Upload Failed' + err);
-    //           })
-    //         }
-    //       }, (err) => {
-    //         alert('err readAsArrayBuffer');
-    //         alert(JSON.stringify(err))
-    //       })
-    //   }, (err) => {
-    //     alert('err resolveLocalFilesystemUrl');
-    //     alert(JSON.stringify(err))
-    //   })
-
-
-
-
-    // console.log(resFile.)
-    // var reader = new FileReader();
-    // reader.readAsArrayBuffer(resFile);
-    // reader.onloadend = (evt: any) => {
-    //   var imgBlob = new Blob([evt.target.result], { type: 'image/jpeg' });
-    //   var imageStore = this.firestore.ref().child('image');
-    //   imageStore.put(imgBlob).then((res) => {
-    //     alert('Upload Success');
-    //   }).catch((err) => {
-    //     alert('Upload Failed' + err);
-    //   })
-    // }
-    // }
-
-    // });
-
-    // (<any>window).resolveLocalFileSystemURL('assets/images/ionic2-logo.png', (res) => {
-    //   res.file((resFile) => {
-    //     var reader = new FileReader();
-    //     reader.readAsArrayBuffer(resFile);
-    //     reader.onloadend = (evt: any) => {
-    //       var imgBlob = new Blob([evt.target.result], { type: 'image/jpeg' });
-    //       var imageStore = this.firestore.ref().child('image');
-    //       imageStore.put(imgBlob).then((res) => {
-    //         alert('Upload Success');
-    //       }).catch((err) => {
-    //         alert('Upload Failed' + err);
-    //       })
-    //     }
-    //   })
-    // })
   }
 
 
@@ -244,7 +144,8 @@ export class Teacher {
 
     this.gallery.load()
       .then((filePath: string) => {
-        alert(filePath)
+        this.uploadimage(filePath)
+        //alert(filePath)
       })
       .catch((err: Error) => {
         alert(err)
@@ -253,14 +154,14 @@ export class Teacher {
 
   }
 
-  private showAlert(msg: string): void {
-    let alert = this.alertCtrl.create({
-      title: msg,
-      subTitle: msg,
-      buttons: ['OK']
-    });
-    alert.present();
-  }
+  // private showAlert(msg: string): void {
+  //   let alert = this.alertCtrl.create({
+  //     title: msg,
+  //     subTitle: msg,
+  //     buttons: ['OK']
+  //   });
+  //   alert.present();
+  // }
 
 
 
