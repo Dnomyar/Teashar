@@ -9,6 +9,10 @@ import { HomePage } from '../pages/home/home';
 import { Teacher } from "../pages/teacher/teacher";
 import { Student } from "../pages/student/student";
 
+import { AngularFireModule } from 'angularfire2';
+
+import { firebaseConfig } from './app.firebase.conf.ts'
+
 @NgModule({
   declarations: [
     MyApp,
@@ -18,7 +22,8 @@ import { Student } from "../pages/student/student";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
