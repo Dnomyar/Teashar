@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { Teacher } from "../pages/teacher/teacher";
 import { Student } from "../pages/student/student";
+import { GalleryImpl, Gallery } from "../media/filesystem/gallery/gallery.impl";
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -39,6 +40,7 @@ import { firebaseConfig } from './app.firebase.conf.ts'
     SplashScreen,
     File,
     Camera,
+    { provide: Gallery, useClass: GalleryImpl },
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

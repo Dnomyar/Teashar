@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 //import { File, Entry } from '@ionic-native/file';
 import { File as IonicNativeFile } from '@ionic-native/file';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-
+// import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import firebase from 'firebase';
+import { Gallery } from "../../media/filesystem/gallery/gallery.impl";
 
 declare var cordova: any;
 
@@ -36,10 +36,11 @@ export class Teacher {
     af: AngularFire,
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
-    private file: IonicNativeFile,
-    private camera: Camera) {
+    @Inject(Gallery) public gallery,
+    private file: IonicNativeFile) {
 
     this.songs = af.database.list('/songs');
+
 
     this.platform.ready().then(() => {
 
@@ -241,23 +242,14 @@ export class Teacher {
 
   private openGallery(): void {
 
-    const options: CameraOptions = {
-      //quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      //mediaType: this.camera.MediaType.PICTURE
-    }
+    this.gallery.load()
+      .then((filePath: string) => {
+        alert(filePath)
+      })
+      .catch((err: Error) => {
+        alert(err)
+      })
 
-    this.camera.getPicture(options)
-      .then((imageData) => {
-        alert(imageData)
-        this.imageSrc = imageData
-        this.uploadimage(imageData)
-      }, (err) => {
-        // Handle error
-        this.showAlert("error")
-        console.log(err)
-      });
 
   }
 
