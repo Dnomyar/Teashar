@@ -1,5 +1,20 @@
 # Teashar
 
+Teashar (contraction of Teacher and share) is very basic Ionic 2 app. The goal of this app is to enable teachers to upload a media for their students. 
+
+I used Firebase to store data and media. 
+
+
+## The app
+Here is its looks like : 
+![Picture of what it looks like](/teashar.png?raw=true)
+
+It is also possible to remove a entry : 
+![Picture that shows the options to apply to a entry](/show_option.PNG?raw=true)
+
+This is the student view :  
+![Picture that shows the student view](/student_view.PNG?raw=true)
+
 
 ## Before run
 ### Setup firebase
