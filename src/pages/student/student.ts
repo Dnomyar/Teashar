@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FirebaseListObservable, AngularFire } from "angularfire2";
 
 /**
  * Generated class for the Student page.
@@ -14,7 +15,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class Student {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  medias: FirebaseListObservable<any>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire) {
+    this.medias = af.database.list('/medias');
   }
 
   ionViewDidLoad() {

@@ -10,7 +10,7 @@ import { Component } from "@angular/core";
 })
 export class UploadModal {
 
-  private mediaTitle: string = "nothing";
+  private mediaTitle: string = "";
   private mediaLocalPath: string = "";
 
   constructor(public viewCtrl: ViewController, private _navParams: NavParams) {
