@@ -26,7 +26,7 @@ declare var cordova: any;
 })
 export class Teacher {
 
-  media: FirebaseListObservable<any>;
+  medias: FirebaseListObservable<any>;
   storageDirectory: string = '';
 
   private imageSrc: string = "";
@@ -46,7 +46,7 @@ export class Teacher {
     public modalCtrl: ModalController,
     private file: IonicNativeFile) {
 
-    this.media = af.database.list('/media');
+    this.medias = af.database.list('/medias');
 
   }
 
@@ -86,7 +86,7 @@ export class Teacher {
     this.upload.upload(filePath, this.uploadLoader.onProgress)
       .then((res) => {
         // alert(res.downloadURL)
-        this.media.push({
+        this.medias.push({
           title: mediaTitle,
           url: res.downloadURL
         });
@@ -141,7 +141,7 @@ export class Teacher {
   }
 
   removeMedia(songId: string) {
-    this.media.remove(songId);
+    this.medias.remove(songId);
   }
 
   updateMedia(songId, songTitle) {
@@ -165,7 +165,7 @@ export class Teacher {
         {
           text: 'Save',
           handler: data => {
-            this.media.update(songId, {
+            this.medias.update(songId, {
               title: data.title
             });
           }
