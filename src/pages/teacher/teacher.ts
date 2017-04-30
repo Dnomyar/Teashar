@@ -12,7 +12,6 @@ import { UploadModal } from "../../media/upload-modal/upload-modal";
 import { UploadLoader } from "./upload-loader";
 import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
 
-declare var cordova: any;
 
 /**
  * Generated class for the Teacher page.
@@ -38,14 +37,11 @@ export class Teacher {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     af: AngularFire,
-    public actionSheetCtrl: ActionSheetController,
-    public platform: Platform,
     @Inject(Gallery) public gallery,
     @Inject(Upload) public upload,
     private uploadLoader: UploadLoader,
-    public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController,
-    private file: IonicNativeFile) {
+    private mediaListItemOptions: MediaListItemOptions,
+    public modalCtrl: ModalController) {
 
     this.medias = af.database.list('/medias');
 
@@ -55,13 +51,12 @@ export class Teacher {
     console.log('ionViewDidLoad Teacher');
   }
 
-  private openGallery(): void {
+  openGallery(): void {
 
     this.gallery.load()
       .then((filePath: string) => this.openModal(filePath))
       .catch((err: Error) => {
-        alert("gallery err")
-        alert(err)
+        // no image selected, do nothing here
       })
 
   }
@@ -86,36 +81,31 @@ export class Teacher {
 
     this.upload.upload(filePath, this.uploadLoader.onProgress)
       .then((res) => {
-        // alert(res.downloadURL)
-        this.medias.push({
-          title: mediaTitle,
-          url: res.downloadURL
-        });
-        // alert(JSON.stringify(res))
+        this.addMedia(mediaTitle, res.downloadURL)
         this.uploadLoader.dismiss()
-        let alert2 = this.alertCtrl.create({
-          title: 'Ok',
-          buttons: ['OK']
-        });
-        alert2.present();
-
       })
       .catch((err) => {
         this.uploadLoader.dismiss()
-        let alert = this.alertCtrl.create({
-          title: 'KO',
-          subTitle: JSON.stringify(err),
-          buttons: ['OK']
-        });
-        alert.present();
+        this.showError()
       })
 
   }
 
-
-
+  private addMedia(title: string, url: string): void {
+    this.medias.push({
+      title: title,
+      url: url
     });
-    actionSheet.present();
+  }
+
+
+  private showError(): void {
+    let alert = this.alertCtrl.create({
+      title: 'An error occured',
+      subTitle: "Try again later please",
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 

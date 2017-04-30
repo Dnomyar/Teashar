@@ -41,11 +41,11 @@ export class UploadImpl implements IUpload {
   // Use an FileReader to load file
   private loadInArrayBuffer(blob): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsArrayBuffer(blob);
 
       reader.onloadend = (evt: any) => {
-        var imgBlob = new Blob([evt.target.result], { type: 'image/png' });
+        const imgBlob = new Blob([evt.target.result], { type: 'image/png' });
         resolve(imgBlob)
       }
       reader.onerror = reject
