@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import firebase from 'firebase';
 
 import { Upload as IUpload } from './upload'
+import { RandomGenerator } from "../../util/random-generator";
 
 
 
@@ -13,7 +14,7 @@ export class UploadImpl implements IUpload {
 
   private firestore: firebase.storage.Storage;
 
-  constructor(private file: IonicNativeFile) {
+  constructor(private file: IonicNativeFile, private randomGen: RandomGenerator) {
     this.firestore = firebase.storage();
   }
 
@@ -55,7 +56,8 @@ export class UploadImpl implements IUpload {
   private putToFirebase(progress: (number) => void): (Blob) => firebase.storage.UploadTask {
     return (blob: Blob) => {
 
-      var imageStore = this.firestore.ref().child('image')
+      const imageName = this.randomGen.gererate()
+      const imageStore = this.firestore.ref().child(imageName)
       const uploadTask = imageStore.put(blob)
 
       // Use Observable.interval to know progress
