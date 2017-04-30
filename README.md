@@ -6,7 +6,7 @@ I used Firebase to store data and media.
 
 
 ## The app
-Here is its looks like : 
+Here is what it's looks like : 
 ![Picture of what it looks like](/teashar.png?raw=true)
 
 It is also possible to remove a entry : 
