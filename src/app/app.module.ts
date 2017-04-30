@@ -16,6 +16,7 @@ import { UploadImpl, Upload } from "../media/upload/upload.impl";
 import { AngularFireModule } from 'angularfire2';
 
 import { firebaseConfig } from './app.firebase.conf.ts'
+import { UploadLoader } from "../pages/teacher/uploadloader";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { firebaseConfig } from './app.firebase.conf.ts'
     SplashScreen,
     File,
     Camera,
+    UploadLoader,
     { provide: Gallery, useClass: GalleryImpl },
     { provide: Upload, useClass: UploadImpl },
     { provide: ErrorHandler, useClass: IonicErrorHandler }

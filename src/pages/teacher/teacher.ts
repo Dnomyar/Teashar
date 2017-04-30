@@ -8,6 +8,7 @@ import { File as IonicNativeFile } from '@ionic-native/file';
 import firebase from 'firebase';
 import { Gallery } from "../../media/filesystem/gallery/gallery.impl";
 import { Upload } from "../../media/upload/upload.impl";
+import { UploadLoader } from "./uploadloader";
 
 declare var cordova: any;
 
@@ -39,6 +40,7 @@ export class Teacher {
     public platform: Platform,
     @Inject(Gallery) public gallery,
     @Inject(Upload) public upload,
+    private uploadLoader: UploadLoader,
     public loadingCtrl: LoadingController,
     private file: IonicNativeFile) {
 
@@ -104,18 +106,10 @@ export class Teacher {
 
   uploadimage(filePath: string) {
 
-    const getLoadMessage: (number) => string = (progress) => {
-      return `Please wait... (${progress} %)`
-    }
+  private openGallery(): void {
 
-    let loader = this.loadingCtrl.create({
-      content: getLoadMessage(0)
-    });
-    loader.present();
 
-    const progress = (progress: number) => {
-      loader.setContent(getLoadMessage(progress))
-    }
+    this.uploadLoader.show()
 
     this.upload.upload(filePath, progress)
       .then((res) => {
