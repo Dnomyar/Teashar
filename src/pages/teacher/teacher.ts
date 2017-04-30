@@ -10,6 +10,7 @@ import { Gallery } from "../../media/file-system/gallery/gallery.impl";
 import { Upload } from "../../media/upload/upload.impl";
 import { UploadModal } from "../../media/upload-modal/upload-modal";
 import { UploadLoader } from "./upload-loader";
+import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
 
 declare var cordova: any;
 
@@ -113,66 +114,16 @@ export class Teacher {
 
 
 
-  showOptions(songId, songTitle) {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'What do you want to do?',
-      buttons: [
-        {
-          text: 'Delete Song',
-          role: 'destructive',
-          handler: () => {
-            this.removeMedia(songId);
-          }
-        }, {
-          text: 'Update title',
-          handler: () => {
-            this.updateMedia(songId, songTitle);
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
     });
     actionSheet.present();
   }
 
-  removeMedia(songId: string) {
-    this.medias.remove(songId);
+
+
+  showOptions(songId: string, songTitle: string) {
+    this.mediaListItemOptions.showOptions(this.medias, songId, songTitle)
   }
 
-  updateMedia(songId, songTitle) {
-    let prompt = this.alertCtrl.create({
-      title: 'Song Name',
-      message: "Update the name for this song",
-      inputs: [
-        {
-          name: 'title',
-          placeholder: 'Title',
-          value: songTitle
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: data => {
-            this.medias.update(songId, {
-              title: data.title
-            });
-          }
-        }
-      ]
-    });
-    prompt.present();
-  }
+
 
 }
