@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform, LoadingController, ModalController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 //import { File, Entry } from '@ionic-native/file';
 import { File as IonicNativeFile } from '@ionic-native/file';
@@ -8,6 +8,7 @@ import { File as IonicNativeFile } from '@ionic-native/file';
 import firebase from 'firebase';
 import { Gallery } from "../../media/filesystem/gallery/gallery.impl";
 import { Upload } from "../../media/upload/upload.impl";
+import { UploadModal } from "../../media/uploadmodal/uploadmodal";
 import { UploadLoader } from "./uploadloader";
 
 declare var cordova: any;
@@ -42,68 +43,16 @@ export class Teacher {
     @Inject(Upload) public upload,
     private uploadLoader: UploadLoader,
     public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController,
     private file: IonicNativeFile) {
 
     this.media = af.database.list('/media');
 
-
-    this.platform.ready().then(() => {
-
-      // make sure this is on a device, not an emulation (e.g. chrome tools device mode)
-      if (!this.platform.is('cordova')) {
-        return false;
-      }
-
-      if (this.platform.is('ios')) {
-        this.storageDirectory = cordova.file.documentsDirectory;
-      }
-      else if (this.platform.is('android')) {
-        this.storageDirectory = cordova.file.dataDirectory;
-      }
-      else {
-        // exit otherwise, but you could add further types here e.g. Windows
-        return false;
-      }
-    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Teacher');
   }
-
-  addSong() {
-    let prompt = this.alertCtrl.create({
-      title: 'Song Name',
-      message: "Enter a name for this new song you're so keen on adding",
-      inputs: [
-        {
-          name: 'title',
-          placeholder: 'Title'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: data => {
-            //this.uploadimage()
-
-            this.songs.push({
-              title: data.title
-            });
-          }
-        }
-      ]
-    });
-    prompt.present();
-  }
-
-
 
   private openGallery(): void {
 
@@ -130,18 +79,18 @@ export class Teacher {
   }
 
 
-  uploadimage(filePath: string, mediaTitle: string) {
+  private uploadimage(filePath: string, mediaTitle: string) {
 
     this.uploadLoader.show()
 
     this.upload.upload(filePath, this.uploadLoader.onProgress)
       .then((res) => {
-        alert(res.downloadURL)
+        // alert(res.downloadURL)
         this.media.push({
           title: mediaTitle,
           url: res.downloadURL
         });
-        alert(JSON.stringify(res))
+        // alert(JSON.stringify(res))
         this.uploadLoader.dismiss()
         let alert2 = this.alertCtrl.create({
           title: 'Ok',
@@ -161,16 +110,6 @@ export class Teacher {
       })
 
   }
-
-
-  // private showAlert(msg: string): void {
-  //   let alert = this.alertCtrl.create({
-  //     title: msg,
-  //     subTitle: msg,
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-  // }
 
 
 

@@ -14,27 +14,12 @@
 
 
 <ion-content padding>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit vero praesentium fuga accusamus incidunt eum nisi
-  aliquid voluptates at harum eos temporibus recusandae neque animi, voluptatum consequuntur ullam, commodi vel.
 
-  <img [src]="imageSrc" />
-
-  <button ion-button on-tap="openGallery()">Button</button>
-
-  <p>Choose a Photo</p>
-
-
-  <img src="assets/images/ionic2-logo.png" alt="test">
-
-  <ion-buttons end>
-    <button ion-button icon-only (click)="addSong()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-buttons>
+  <button ion-button full on-tap="openGallery()">Upload media</button>
 
   <ion-list>
-    <ion-item *ngFor="let song of songs | async" (click)="showOptions(song.$key, song.title)">
-      {{song.title}}
+    <ion-item *ngFor="let media of medias | async" (click)="showOptions(media.$key, media.title)">
+      {{media.title}}
     </ion-item>
   </ion-list>
 </ion-content>
