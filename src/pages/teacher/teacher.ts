@@ -25,7 +25,7 @@ declare var cordova: any;
 })
 export class Teacher {
 
-  songs: FirebaseListObservable<any>;
+  media: FirebaseListObservable<any>;
   storageDirectory: string = '';
 
   private imageSrc: string = "";
@@ -44,7 +44,7 @@ export class Teacher {
     public loadingCtrl: LoadingController,
     private file: IonicNativeFile) {
 
-    this.songs = af.database.list('/songs');
+    this.media = af.database.list('/media');
 
 
     this.platform.ready().then(() => {
@@ -182,12 +182,12 @@ export class Teacher {
           text: 'Delete Song',
           role: 'destructive',
           handler: () => {
-            this.removeSong(songId);
+            this.removeMedia(songId);
           }
         }, {
           text: 'Update title',
           handler: () => {
-            this.updateSong(songId, songTitle);
+            this.updateMedia(songId, songTitle);
           }
         }, {
           text: 'Cancel',
@@ -201,11 +201,11 @@ export class Teacher {
     actionSheet.present();
   }
 
-  removeSong(songId: string) {
-    this.songs.remove(songId);
+  removeMedia(songId: string) {
+    this.media.remove(songId);
   }
 
-  updateSong(songId, songTitle) {
+  updateMedia(songId, songTitle) {
     let prompt = this.alertCtrl.create({
       title: 'Song Name',
       message: "Update the name for this song",
@@ -226,7 +226,7 @@ export class Teacher {
         {
           text: 'Save',
           handler: data => {
-            this.songs.update(songId, {
+            this.media.update(songId, {
               title: data.title
             });
           }
