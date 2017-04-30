@@ -6,10 +6,10 @@ import { File as IonicNativeFile } from '@ionic-native/file';
 // import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import firebase from 'firebase';
-import { Gallery } from "../../media/filesystem/gallery/gallery.impl";
+import { Gallery } from "../../media/file-system/gallery/gallery.impl";
 import { Upload } from "../../media/upload/upload.impl";
-import { UploadModal } from "../../media/uploadmodal/uploadmodal";
-import { UploadLoader } from "./uploadloader";
+import { UploadModal } from "../../media/upload-modal/upload-modal";
+import { UploadLoader } from "./upload-loader";
 
 declare var cordova: any;
 
