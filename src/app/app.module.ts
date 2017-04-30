@@ -16,6 +16,7 @@ import { UploadImpl, Upload } from "../media/upload/upload.impl";
 import { AngularFireModule } from 'angularfire2';
 
 import { firebaseConfig } from './app.firebase.conf.ts'
+import { UploadModal } from "../media/uploadmodal/uploadmodal";
 import { UploadLoader } from "../pages/teacher/uploadloader";
 
 @NgModule({
@@ -23,7 +24,8 @@ import { UploadLoader } from "../pages/teacher/uploadloader";
     MyApp,
     HomePage,
     Teacher,
-    Student
+    Student,
+    UploadModal
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import { UploadLoader } from "../pages/teacher/uploadloader";
     MyApp,
     HomePage,
     Teacher,
-    Student
+    Student,
+    UploadModal
   ],
   providers: [
     StatusBar,

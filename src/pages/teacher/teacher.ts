@@ -104,25 +104,54 @@ export class Teacher {
   }
 
 
-  uploadimage(filePath: string) {
 
   private openGallery(): void {
 
+    this.gallery.load()
+      .then((filePath: string) => this.openModal(filePath))
+      .catch((err: Error) => {
+        alert("gallery err")
+        alert(err)
+      })
+
+  }
+
+  private openModal(filePath: string): void {
+    let contactModal = this.modalCtrl.create(UploadModal, { mediaLocalPath: filePath });
+    contactModal.present()
+
+    contactModal.onDidDismiss((promise) => {
+      promise
+        .then((mediaTitle) => this.uploadimage(filePath, mediaTitle))
+        .catch((err) => {
+          // do nothing here
+        })
+    })
+  }
+
+
+  uploadimage(filePath: string, mediaTitle: string) {
 
     this.uploadLoader.show()
 
-    this.upload.upload(filePath, progress)
+    this.upload.upload(filePath, this.uploadLoader.onProgress)
       .then((res) => {
-        loader.dismiss()
-        let alert = this.alertCtrl.create({
+        alert(res.downloadURL)
+        this.media.push({
+          title: mediaTitle,
+          url: res.downloadURL
+        });
+        alert(JSON.stringify(res))
+        this.uploadLoader.dismiss()
+        let alert2 = this.alertCtrl.create({
           title: 'Ok',
           buttons: ['OK']
         });
-        alert.present();
+        alert2.present();
 
       })
       .catch((err) => {
-        loader.dismiss()
+        this.uploadLoader.dismiss()
         let alert = this.alertCtrl.create({
           title: 'KO',
           subTitle: JSON.stringify(err),
@@ -133,20 +162,6 @@ export class Teacher {
 
   }
 
-
-  private openGallery(): void {
-
-    this.gallery.load()
-      .then((filePath: string) => {
-        this.uploadimage(filePath)
-        //alert(filePath)
-      })
-      .catch((err: Error) => {
-        alert(err)
-      })
-
-
-  }
 
   // private showAlert(msg: string): void {
   //   let alert = this.alertCtrl.create({
