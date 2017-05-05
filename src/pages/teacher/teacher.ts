@@ -1,26 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform, LoadingController, ModalController } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
-//import { File, Entry } from '@ionic-native/file';
-import { File as IonicNativeFile } from '@ionic-native/file';
-// import { Camera, CameraOptions } from '@ionic-native/camera';
-
-import firebase from 'firebase';
+import { IonicPage, NavController, AlertController, ModalController } from 'ionic-angular';
 import { Gallery } from "../../media/file-system/gallery/gallery.impl";
 import { Upload } from "../../media/upload/upload.impl";
 import { UploadModal } from "../../media/upload-modal/upload-modal";
 import { UploadLoader } from "./upload-loader";
 import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
-import { MediaProvider } from "../../providers/media-provider";
-import { Media } from "../../models/media";
+import { StoryProvider } from "../../providers/story-provider";
+import { Story } from "../../models/story";
 
 
-/**
- * Generated class for the Teacher page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-teacher',
@@ -30,7 +18,7 @@ export class Teacher {
 
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
-    private mediaProvider: MediaProvider,
+    private storyProvider: StoryProvider,
     @Inject(Gallery) public gallery,
     @Inject(Upload) public upload,
     private uploadLoader: UploadLoader,
@@ -84,7 +72,7 @@ export class Teacher {
   }
 
   private addMedia(title: string, url: string): void {
-    this.mediaProvider.add(new Media(title, url))
+    this.storyProvider.add(new Story(title, url))
   }
 
 

@@ -20,11 +20,11 @@
   </ion-list-header>
 
   <ion-list>
-    <ion-item *ngFor="let media of mediaProvider.all() | async">
+    <ion-item *ngFor="let story of storyProvider.all() | async">
       <ion-thumbnail item-left>
-        <img [src]="media.url">
+        <img [src]="story.url">
       </ion-thumbnail>
-      {{media.title}}
+      {{story.title}}
     </ion-item>
   </ion-list>
 

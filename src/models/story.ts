@@ -1,6 +1,6 @@
 
 
-export class Media {
+export class Story {
 
   constructor(title: string,
     url: string) {

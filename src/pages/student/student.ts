@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseListObservable, AngularFire } from "angularfire2";
 import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
-import { MediaProvider } from "../../providers/media-provider";
+import { StoryProvider } from "../../providers/story-provider";
 
 /**
  * Generated class for the Student page.
@@ -19,7 +19,7 @@ export class Student {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private mediaProvider: MediaProvider,
+    private storyProvider: StoryProvider,
     private mediaListItemOptions: MediaListItemOptions) {
   }
 

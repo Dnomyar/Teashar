@@ -2,13 +2,13 @@
 import { ActionSheetController } from "ionic-angular";
 import { FirebaseListObservable } from "angularfire2";
 import { Injectable } from "@angular/core";
-import { MediaProvider } from "../../providers/media-provider";
+import { StoryProvider } from "../../providers/story-provider";
 
 @Injectable()
 export class MediaListItemOptions {
 
   constructor(private actionSheetCtrl: ActionSheetController,
-    private mediaProvider: MediaProvider) {
+    private storyProvider: StoryProvider) {
   }
 
   showOptions(id: string, title: string) {
@@ -32,7 +32,7 @@ export class MediaListItemOptions {
   }
 
   private removeMedia(id: string) {
-    this.mediaProvider.delete(id)
+    this.storyProvider.delete(id)
   }
 
 }
