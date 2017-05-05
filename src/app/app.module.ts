@@ -20,6 +20,7 @@ import { UploadModal } from "../media/upload-modal/upload-modal";
 import { UploadLoader } from "../pages/teacher/upload-loader";
 import { MediaListItemOptions } from "../media/media-list/media-list-item-options";
 import { RandomGenerator } from "../util/random-generator";
+import { MediaProvider } from "../providers/media-provider";
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { RandomGenerator } from "../util/random-generator";
     MediaListItemOptions,
     UploadLoader,
     RandomGenerator,
+    MediaProvider,
     { provide: Gallery, useClass: GalleryImpl },
     { provide: Upload, useClass: UploadImpl },
     { provide: ErrorHandler, useClass: IonicErrorHandler }

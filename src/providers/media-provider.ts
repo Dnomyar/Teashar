@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AngularFire, FirebaseListObservable } from "angularfire2";
+import { Media } from "../models/media";
 
 @Injectable()
 export class MediaProvider {
@@ -16,11 +17,11 @@ export class MediaProvider {
     return this.medias
   }
 
-  add(media) {
+  add(media: Media) {
     this.medias.push(media);
   }
 
-  delete(id) {
+  delete(id: string) {
     this.medias.remove(id);
   }
 

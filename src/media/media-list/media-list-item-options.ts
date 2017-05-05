@@ -2,22 +2,24 @@
 import { ActionSheetController } from "ionic-angular";
 import { FirebaseListObservable } from "angularfire2";
 import { Injectable } from "@angular/core";
+import { MediaProvider } from "../../providers/media-provider";
 
 @Injectable()
 export class MediaListItemOptions {
 
-  constructor(private actionSheetCtrl: ActionSheetController) {
+  constructor(private actionSheetCtrl: ActionSheetController,
+    private mediaProvider: MediaProvider) {
   }
 
-  showOptions(medias: FirebaseListObservable<any>, songId: string, songTitle: string) {
+  showOptions(id: string, title: string) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'What do you want to do?',
       buttons: [
         {
-          text: `Delete "${songTitle}"`,
+          text: `Delete "${title}"`,
           role: 'destructive',
           handler: () => {
-            this.removeMedia(medias, songId);
+            this.removeMedia(id);
           }
         }, {
           text: 'Cancel',
@@ -29,8 +31,8 @@ export class MediaListItemOptions {
     actionSheet.present();
   }
 
-  private removeMedia(medias: FirebaseListObservable<any>, songId: string) {
-    medias.remove(songId);
+  private removeMedia(id: string) {
+    this.mediaProvider.delete(id)
   }
 
 }

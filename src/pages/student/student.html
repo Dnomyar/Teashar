@@ -20,7 +20,7 @@
   </ion-list-header>
 
   <ion-list>
-    <ion-item *ngFor="let media of medias | async" (click)="showOptions(media.$key, media.title)">
+    <ion-item *ngFor="let media of mediaProvider.all() | async">
       <ion-thumbnail item-left>
         <img [src]="media.url">
       </ion-thumbnail>

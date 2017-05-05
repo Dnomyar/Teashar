@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseListObservable, AngularFire } from "angularfire2";
 import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
+import { MediaProvider } from "../../providers/media-provider";
 
 /**
  * Generated class for the Student page.
@@ -16,22 +17,15 @@ import { MediaListItemOptions } from "../../media/media-list/media-list-item-opt
 })
 export class Student {
 
-  medias: FirebaseListObservable<any>;
-
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    af: AngularFire,
+    private mediaProvider: MediaProvider,
     private mediaListItemOptions: MediaListItemOptions) {
-    this.medias = af.database.list('/medias');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Student');
   }
 
-
-  showOptions(songId: string, songTitle: string) {
-    this.mediaListItemOptions.showOptions(this.medias, songId, songTitle)
-  }
 
 }

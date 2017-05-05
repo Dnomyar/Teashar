@@ -12,6 +12,7 @@ import { UploadModal } from "../../media/upload-modal/upload-modal";
 import { UploadLoader } from "./upload-loader";
 import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
 import { MediaProvider } from "../../providers/media-provider";
+import { Media } from "../../models/media";
 
 
 /**
@@ -27,10 +28,7 @@ import { MediaProvider } from "../../providers/media-provider";
 })
 export class Teacher {
 
-  medias: FirebaseListObservable<any>;
-
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
     public alertCtrl: AlertController,
     private mediaProvider: MediaProvider,
     @Inject(Gallery) public gallery,
@@ -38,8 +36,6 @@ export class Teacher {
     private uploadLoader: UploadLoader,
     private mediaListItemOptions: MediaListItemOptions,
     public modalCtrl: ModalController) {
-
-    this.medias = mediaProvider.all();
 
   }
 
@@ -88,10 +84,7 @@ export class Teacher {
   }
 
   private addMedia(title: string, url: string): void {
-    this.medias.push({
-      title: title,
-      url: url
-    });
+    this.mediaProvider.add(new Media(title, url))
   }
 
 
@@ -106,8 +99,8 @@ export class Teacher {
 
 
 
-  showOptions(songId: string, songTitle: string) {
-    this.mediaListItemOptions.showOptions(this.medias, songId, songTitle)
+  showOptions(id: string, title: string) {
+    this.mediaListItemOptions.showOptions(id, title)
   }
 
 
