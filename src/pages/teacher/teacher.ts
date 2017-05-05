@@ -28,11 +28,6 @@ import { MediaProvider } from "../../providers/media-provider";
 export class Teacher {
 
   medias: FirebaseListObservable<any>;
-  storageDirectory: string = '';
-
-  private imageSrc: string = "";
-
-  firestore = firebase.storage();
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
