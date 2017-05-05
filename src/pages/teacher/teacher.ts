@@ -11,6 +11,7 @@ import { Upload } from "../../media/upload/upload.impl";
 import { UploadModal } from "../../media/upload-modal/upload-modal";
 import { UploadLoader } from "./upload-loader";
 import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
+import { MediaProvider } from "../../providers/media-provider";
 
 
 /**
@@ -36,14 +37,14 @@ export class Teacher {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    af: AngularFire,
+    private mediaProvider: MediaProvider,
     @Inject(Gallery) public gallery,
     @Inject(Upload) public upload,
     private uploadLoader: UploadLoader,
     private mediaListItemOptions: MediaListItemOptions,
     public modalCtrl: ModalController) {
 
-    this.medias = af.database.list('/medias');
+    this.medias = mediaProvider.all();
 
   }
 
