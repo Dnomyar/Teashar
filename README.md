@@ -49,6 +49,8 @@ service firebase.storage {
 }
 ```
 ### Install npm dependancies
+Note that you have to install `cordova` & `ionic` : `npm i -g cordova ionic`.
+
 Run `npm i`
 
 ## How to run ...
