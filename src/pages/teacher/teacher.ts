@@ -7,6 +7,8 @@ import { UploadLoader } from "./upload-loader";
 import { MediaListItemOptions } from "../../media/media-list/media-list-item-options";
 import { StoryProvider } from "../../providers/story-provider";
 import { Story } from "../../models/story";
+import { Story as StoryPage } from "../../pages/story/story";
+import { StoryModalAdd } from "../../providers/story-modal-add";
 
 
 @IonicPage()
@@ -23,12 +25,31 @@ export class Teacher {
     @Inject(Upload) public upload,
     private uploadLoader: UploadLoader,
     private mediaListItemOptions: MediaListItemOptions,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    private storyModalAdd: StoryModalAdd) {
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Teacher');
+  }
+
+  addStory(): void {
+    this.storyModalAdd.show()
+      .map(this.createStory)
+      .map(this.storeStory)
+      .subscribe(e => console.log("Story created"))
+  }
+
+  private createStory: (any) => Story = alertInput => 
+    new Story(alertInput.title, new Date().toString())
+  
+  private storeStory: (Story) => any = story =>
+    this.storyProvider.add(story)
+  
+
+  openStory(story) {
+    this.navCtrl.push(StoryPage, {story: story})
   }
 
   openGallery(): void {

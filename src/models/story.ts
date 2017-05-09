@@ -1,9 +1,11 @@
 
 
 export class Story {
+  private key: string;
 
-  constructor(title: string,
-    url: string) {
+  constructor(
+    private title: string,
+    private created: string) {
   }
 
 }

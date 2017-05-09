@@ -15,15 +15,15 @@
 
 <ion-content padding>
 
-  <button ion-button full on-tap="openGallery()">Upload media</button>
+  <button ion-button full on-tap="addStory()">Add story</button>
 
   <ion-list-header>
-    Uploaded medias
+    Stories
   </ion-list-header>
 
   <ion-list>
-    <ion-item *ngFor="let story of storyProvider.all() | async" (click)="showOptions(story.$key, story.title)">
-      <p>{{story.key}}</p>
+    <!--<ion-item *ngFor="let story of storyProvider.all() | async" (click)="openStory(story)">-->
+    <ion-item *ngFor="let story of storyProvider.all()" (click)="openStory(story)">
       <p>{{story.title}}</p>
     </ion-item>
   </ion-list>
