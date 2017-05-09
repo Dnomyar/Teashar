@@ -21,6 +21,9 @@ import { UploadLoader } from "../pages/teacher/upload-loader";
 import { MediaListItemOptions } from "../media/media-list/media-list-item-options";
 import { RandomGenerator } from "../util/random-generator";
 import { StoryProvider } from "../providers/story-provider";
+import { StoryModalAdd } from "../providers/story-modal-add";
+import { Story } from "../pages/story/story";
+import { MediaProvider } from "../providers/media-provider";
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { StoryProvider } from "../providers/story-provider";
     HomePage,
     Teacher,
     Student,
+    Story,
     UploadModal
   ],
   imports: [
@@ -41,6 +45,7 @@ import { StoryProvider } from "../providers/story-provider";
     HomePage,
     Teacher,
     Student,
+    Story,
     UploadModal
   ],
   providers: [
@@ -52,6 +57,8 @@ import { StoryProvider } from "../providers/story-provider";
     UploadLoader,
     RandomGenerator,
     StoryProvider,
+    StoryModalAdd,
+    MediaProvider,
     { provide: Gallery, useClass: GalleryImpl },
     { provide: Upload, useClass: UploadImpl },
     { provide: ErrorHandler, useClass: IonicErrorHandler }
