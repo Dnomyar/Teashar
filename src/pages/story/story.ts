@@ -6,7 +6,8 @@ import { Gallery } from "../../media/file-system/gallery/gallery.impl";
 import { UploadModal } from "../../media/upload-modal/upload-modal";
 import { UploadLoader } from "../teacher/upload-loader";
 import { Upload } from "../../media/upload/upload.impl";
-
+import { MediaProviderFactory } from "../../providers/media-provider-factory";
+import { Story as StoryModel } from "../../models/story"
 /**
  * Generated class for the Story page.
  *
@@ -20,9 +21,11 @@ import { Upload } from "../../media/upload/upload.impl";
 })
 export class Story {
 
-  private story: string
+  private story: StoryModel
   private medias: any
   private durations: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+  private mediaProvider: MediaProvider
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,9 +34,12 @@ export class Story {
     public alertCtrl: AlertController,
     private uploadLoader: UploadLoader,
     public modalCtrl: ModalController,
-    private mediaProvider: MediaProvider) {
-    this.medias = this.mediaProvider.all()
+    mediaProviderFactory: MediaProviderFactory) {
+
     this.story = navParams.get("story")
+    this.mediaProvider = mediaProviderFactory.create(this.story.id)
+    this.medias = this.mediaProvider.all()
+
   }
 
   ionViewDidLoad() {

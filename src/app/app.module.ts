@@ -24,6 +24,7 @@ import { StoryProvider } from "../providers/story-provider";
 import { StoryModalAdd } from "../providers/story-modal-add";
 import { Story } from "../pages/story/story";
 import { MediaProvider } from "../providers/media-provider";
+import { MediaProviderFactory } from "../providers/media-provider-factory";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { MediaProvider } from "../providers/media-provider";
     RandomGenerator,
     StoryProvider,
     StoryModalAdd,
-    MediaProvider,
+    MediaProviderFactory,
     { provide: Gallery, useClass: GalleryImpl },
     { provide: Upload, useClass: UploadImpl },
     { provide: ErrorHandler, useClass: IonicErrorHandler }

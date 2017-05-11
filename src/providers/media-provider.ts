@@ -1,8 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { Observable } from "rxjs/Observable";
 import { Media } from "../models/media";
+import { FirebaseListObservable, AngularFire } from "angularfire2";
 
 /*
   Generated class for the MediaProvider provider.
@@ -10,23 +7,29 @@ import { Media } from "../models/media";
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
-@Injectable()
 export class MediaProvider {
 
-  constructor() {
-    console.log('Hello MediaProvider Provider');
+  private medias: FirebaseListObservable<any>
+
+  constructor(private af: AngularFire, storyId: string) {
+    // alert(JSON.stringify(af.database.object(`/story/${storyId}`)))
+    this.medias = af.database.list(`/stories/${storyId}/medias`);
   }
 
-  all() {
-    return [
-      new Media("pict 1", "/assets/images/ionic2-logo.png", 10),
-      new Media("video ", "/assets/images/ionic2-logo.png", undefined)
-    ]
+  all(): FirebaseListObservable<Media> {
+    return this.medias;
   }
+
+  // all() {
+  //   return [
+  //     new Media("pict 1", "/assets/images/ionic2-logo.png", 10),
+  //     new Media("video ", "/assets/images/ionic2-logo.png", undefined)
+  //   ]
+  // }
 
 
   add(media: Media) {
-    console.log("TODO media provider add")
+    this.medias.push(media)
   }
 
 
