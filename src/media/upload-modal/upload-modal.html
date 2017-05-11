@@ -22,6 +22,13 @@
     </ion-item>
 
     <ion-item>
+      <ion-label fixed>Duration : </ion-label>
+      <ion-select [(ngModel)]="durationInSecs">
+        <ion-option *ngFor="let duration of durations" [value]="duration">{{duration}}"</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <img [src]="mediaLocalPath" alt="Media chosen">
     </ion-item>
 

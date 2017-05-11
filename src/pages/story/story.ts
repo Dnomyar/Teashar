@@ -19,12 +19,12 @@ import { Upload } from "../../media/upload/upload.impl";
   templateUrl: 'story.html',
 })
 export class Story {
-  
+
   private story: string
   private medias: any
-  private durations: number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+  private durations: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
     @Inject(Gallery) public gallery,
     @Inject(Upload) public upload,
@@ -32,7 +32,7 @@ export class Story {
     private uploadLoader: UploadLoader,
     public modalCtrl: ModalController,
     private mediaProvider: MediaProvider) {
-      this.medias = this.mediaProvider.all()
+    this.medias = this.mediaProvider.all()
     this.story = navParams.get("story")
   }
 
@@ -71,7 +71,7 @@ export class Story {
 
     contactModal.onDidDismiss((promise) => {
       promise
-        .then((data) => this.uploadimage(filePath, data.mediaTitle, data.duration))
+        .then((data) => this.uploadimage(filePath, data.title, data.durationInSecs))
         .catch((err) => {
           // do nothing here
         })
