@@ -52,7 +52,7 @@ export class Story {
 
   changeDuration(event, media) {
     const valueChosen = event.value
-    this.mediaProvider.changeDuration(media.key, valueChosen)
+    this.mediaProvider.changeDuration(media.$key, valueChosen)
   }
 
 

@@ -1,5 +1,7 @@
 import { Media } from "../models/media";
-import { FirebaseListObservable, AngularFire } from "angularfire2";
+import { FirebaseListObservable, AngularFire, FirebaseObjectObservable } from "angularfire2";
+import { reorderArray } from "ionic-angular";
+import * as _ from "lodash";
 
 /*
   Generated class for the MediaProvider provider.
@@ -9,14 +11,13 @@ import { FirebaseListObservable, AngularFire } from "angularfire2";
 */
 export class MediaProvider {
 
-  private medias: FirebaseListObservable<any>
+  private medias: FirebaseListObservable<any[]>
 
-  constructor(private af: AngularFire, storyId: string) {
-    // alert(JSON.stringify(af.database.object(`/story/${storyId}`)))
+  constructor(private af: AngularFire, private storyId: string) {
     this.medias = af.database.list(`/stories/${storyId}/medias`);
   }
 
-  all(): FirebaseListObservable<Media> {
+  all(): FirebaseListObservable<Media[]> {
     return this.medias;
   }
 
@@ -34,7 +35,9 @@ export class MediaProvider {
 
 
   changeDuration(mediaId, duration) {
-    console.log("TODO change duration")
+    this.medias.update(mediaId, {
+      durationInSecs: duration
+    })
   }
 
 }

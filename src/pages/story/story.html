@@ -13,7 +13,7 @@
 
 
 <ion-content padding>
-    <button ion-button full on-tap="openGallery()">Add a media</button>
+  <button ion-button full on-tap="openGallery()">Add a media</button>
 
 
   <ion-list-header>
@@ -22,18 +22,39 @@
 
   <ion-list>
     <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event)">
-      <!--<ion-item *ngFor="let media of mediaProvider.all() | async" (click)="showOptions(media.$key)">-->
-        
-      <ion-item *ngFor="let media of medias; let i = index">
+      <ion-item *ngFor="let media of medias | async" (click)="showOptions(media.$key)">
+
+        <!--<ion-item *ngFor="let media of medias; let i = index">-->
         <ion-thumbnail item-left>
           <img [src]="media.url">
         </ion-thumbnail>
-        <ion-label>#{{i}} - {{media.title}}</ion-label>
-        <ion-select (ionChange)="changeDuration($event, media)" *ngIf="media.durationInSecs">
-          <ion-option *ngFor="let duration of durations" [value]="duration" [selected]="duration == media.durationInSecs">{{duration}}"</ion-option> 
+        <ion-label># - {{media.title}}</ion-label>
+
+
+        <!-- Use hard coded values because dynamic solution caused UI bug -->
+        <ion-select (ionChange)="changeDuration($event, media)" [(ngModel)]="media.durationInSecs">
+          <ion-option value="1">1"</ion-option>
+          <ion-option value="2">2"</ion-option>
+          <ion-option value="3">3"</ion-option>
+          <ion-option value="4">4"</ion-option>
+          <ion-option value="5">5"</ion-option>
+          <ion-option value="6">6"</ion-option>
+          <ion-option value="7">7"</ion-option>
+          <ion-option value="8">8"</ion-option>
+          <ion-option value="9">9"</ion-option>
+          <ion-option value="10">10"</ion-option>
+          <ion-option value="11">11"</ion-option>
+          <ion-option value="12">12"</ion-option>
+          <ion-option value="13">13"</ion-option>
+          <ion-option value="14">14"</ion-option>
+          <ion-option value="15">15"</ion-option>
         </ion-select>
+
+        <!--<ion-select (ionChange)="changeDuration($event, media)" *ngIf="media.durationInSecs">
+          <ion-option *ngFor="let duration of durations" [value]="duration" [selected]="duration == media.durationInSecs">{{duration}}"</ion-option>
+        </ion-select>-->
       </ion-item>
-    
+
     </ion-item-group>
   </ion-list>
 
