@@ -22,8 +22,8 @@
   </ion-list-header>
 
   <ion-list>
-    <!--<ion-item *ngFor="let story of storyProvider.all() | async" (click)="openStory(story)">-->
-    <ion-item *ngFor="let story of storyProvider.all()" (click)="openStory(story)">
+    <ion-item *ngFor="let story of storyProvider.all() | async" (click)="openStory(story.$key, story)">
+      <!--<ion-item *ngFor="let story of storyProvider.all()" (click)="openStory(story)">-->
       <p>{{story.title}}</p>
     </ion-item>
   </ion-list>

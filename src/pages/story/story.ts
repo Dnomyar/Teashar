@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, reorderArray, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { MediaProvider } from "../../providers/media-provider";
 import { Media } from "../../models/media";
-import { Gallery } from "../../media/file-system/gallery/gallery.impl";
+import { Gallery } from "../../media/file-system/gallery/gallery";
 import { UploadModal } from "../../media/upload-modal/upload-modal";
 import { UploadLoader } from "../teacher/upload-loader";
 import { Upload } from "../../media/upload/upload.impl";
@@ -29,7 +29,7 @@ export class Story {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    @Inject(Gallery) public gallery,
+    public gallery: Gallery,
     @Inject(Upload) public upload,
     public alertCtrl: AlertController,
     private uploadLoader: UploadLoader,
@@ -60,15 +60,20 @@ export class Story {
     console.log("deleteItem")
   }
 
+  takePicture(): void {
+    this.chooseMedia(() => this.gallery.takePicture())
+  }
 
-  openGallery(): void {
+  pickFromGallery(): void {
+    this.chooseMedia(() => this.gallery.pickFromGallery())
+  }
 
-    this.gallery.load()
+  private chooseMedia(getLocalMediaPath: () => Promise<string>) {
+    getLocalMediaPath()
       .then((filePath: string) => this.openModal(filePath))
       .catch((err: Error) => {
         // no image selected, do nothing here
       })
-
   }
 
   private openModal(filePath: string): void {

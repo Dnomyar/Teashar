@@ -35,15 +35,16 @@ export class Teacher {
       .subscribe(e => console.log("Story created"))
   }
 
-  private createStory: (any) => Story = alertInput => 
+  private createStory: (any) => Story = alertInput =>
     new Story(alertInput.title, new Date().toString())
-  
+
   private storeStory: (Story) => any = story =>
     this.storyProvider.add(story)
-  
 
-  openStory(story) {
-    this.navCtrl.push(StoryPage, {story: story})
+
+  openStory(storyId: string, story: Story) {
+    story.id = storyId
+    this.navCtrl.push(StoryPage, { story: story })
   }
 
 

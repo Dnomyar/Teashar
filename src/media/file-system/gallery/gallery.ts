@@ -1,21 +1,28 @@
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
-import { Gallery as IGallery } from './gallery'
-import { Injectable, InjectionToken } from "@angular/core";
+import { Injectable } from "@angular/core";
 
 
 @Injectable()
-export class GalleryImpl implements IGallery {
+export class Gallery {
 
   constructor(private camera: Camera) { }
 
 
-  load(): Promise<string> {
+  takePicture(): Promise<string> {
+    return this.load(this.camera.PictureSourceType.CAMERA)
+  }
+
+  pickFromGallery(): Promise<string> {
+    return this.load(this.camera.PictureSourceType.PHOTOLIBRARY)
+  }
+
+  private load(sourceType): Promise<string> {
     const options: CameraOptions = {
       //quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      sourceType: sourceType,
       //mediaType: this.camera.MediaType.PICTURE
     }
 
@@ -24,4 +31,3 @@ export class GalleryImpl implements IGallery {
 
 
 }
-export const Gallery = new InjectionToken<IGallery>("Gallery");

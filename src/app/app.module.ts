@@ -10,7 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { Teacher } from "../pages/teacher/teacher";
 import { Student } from "../pages/student/student";
-import { GalleryImpl, Gallery } from "../media/file-system/gallery/gallery.impl";
+import { Gallery } from "../media/file-system/gallery/gallery";
 import { UploadImpl, Upload } from "../media/upload/upload.impl";
 
 import { AngularFireModule } from 'angularfire2';
@@ -60,7 +60,7 @@ import { MediaProviderFactory } from "../providers/media-provider-factory";
     StoryProvider,
     StoryModalAdd,
     MediaProviderFactory,
-    { provide: Gallery, useClass: GalleryImpl },
+    Gallery,
     { provide: Upload, useClass: UploadImpl },
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
