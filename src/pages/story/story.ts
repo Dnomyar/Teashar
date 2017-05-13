@@ -47,7 +47,7 @@ export class Story {
   }
 
   reorderItems(indexes) {
-    this.medias = reorderArray(this.medias, indexes);
+    this.mediaProvider.reorderItems(indexes);
   }
 
   changeDuration(event, media) {

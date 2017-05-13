@@ -2,6 +2,7 @@ import { Media } from "../models/media";
 import { FirebaseListObservable, AngularFire, FirebaseObjectObservable } from "angularfire2";
 import { reorderArray } from "ionic-angular";
 import * as _ from "lodash";
+import { Observable } from "rxjs/Observable";
 
 /*
   Generated class for the MediaProvider provider.
@@ -14,7 +15,11 @@ export class MediaProvider {
   private medias: FirebaseListObservable<any[]>
 
   constructor(private af: AngularFire, private storyId: string) {
-    this.medias = af.database.list(`/stories/${storyId}/medias`);
+    this.medias = af.database.list(`/stories/${storyId}/medias`, {
+      query: {
+        orderByChild: 'order'
+      }
+    });
   }
 
   all(): FirebaseListObservable<Media[]> {
@@ -39,5 +44,27 @@ export class MediaProvider {
       durationInSecs: duration
     })
   }
+
+
+  reorderItems(indexes) {
+    var isReordered = false
+
+    const updateOrder = (media, idx) => {
+      this.medias.update(media.$key, {
+        order: idx
+      })
+    }
+
+    this.medias
+      .filter(_ => !isReordered)
+      .map(medias => {
+        reorderArray(medias, indexes).map(updateOrder)
+        isReordered = true
+      })
+      .subscribe(_ => console.log("reorderItems ok"))
+  }
+
+
+
 
 }
