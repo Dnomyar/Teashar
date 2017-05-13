@@ -13,8 +13,20 @@
 
 
 <ion-content padding>
-  <button ion-button full on-tap="takePicture()">Take a picture</button>
-  <button ion-button full on-tap="pickFromGallery()">Add a media</button>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button full icon-left on-tap="takePicture()"><ion-icon name="camera"></ion-icon>Take a picture</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button full icon-left on-tap="pickFromGallery()"><ion-icon name="image"></ion-icon>Pick from gallery</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!--<button ion-button full on-tap="takePicture()"><ion-icon name="home"></ion-icon>Take a picture</button>
+  <button ion-button full on-tap="pickFromGallery()"><ion-icon name="home"></ion-icon>Add a media</button>-->
 
 
   <ion-list-header>
